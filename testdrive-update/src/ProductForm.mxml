@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<j:Card xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:js="library://ns.apache.org/royale/basic"
+	xmlns:mx="library://ns.apache.org/royale/mx"
+	xmlns:j="library://ns.apache.org/royale/jewel"
+	xmlns:html="library://ns.apache.org/royale/html" xmlns="*">
+
+	<fx:Script>
+		<![CDATA[
+			import mx.rpc.events.FaultEvent;
+
+			import org.apache.royale.jewel.Alert;
+			
+			private function onFault(event:FaultEvent):void
+			{
+				Alert.show(event.fault.faultString, "Fault");
+			}
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<Product id="product"
+			name="{productName.text}"
+			category="{category.text}"
+			price="{Number(price.text)}"
+			image="{image.text}"
+			description="{description.text}"/>
+			
+		<mx:RemoteObject id="srv" endpoint="/samples/messagebroker/amf" destination="product">
+			<mx:method name="update" fault="onFault(event)"/>
+		</mx:RemoteObject>
+	</fx:Declarations>
+
+	<j:beads>
+		<js:ContainerDataBinding/>
+	</j:beads>
+
+	<j:CardHeader>
+		<html:H3 text="Details" className="primary-normal"/>
+	</j:CardHeader>
+	
+	<j:CardPrimaryContent>
+		<j:Form>
+			<j:FormItem label="Name">
+				<j:TextInput id="productName" text="{product.name}"/>
+			</j:FormItem>
+			<j:FormItem label="Category">
+				<j:TextInput id="category" text="{product.category}"/>
+			</j:FormItem>
+			<j:FormItem label="Image">
+				<j:TextInput id="image" text="{product.image}"/>
+			</j:FormItem>
+			<j:FormItem label="Price">
+				<j:TextInput id="price" text="{product.price}"/>
+			</j:FormItem>
+			<j:FormItem label="Description">
+				<j:TextInput id="description" text="{product.description}"/>
+			</j:FormItem>
+		</j:Form>
+	</j:CardPrimaryContent>
+
+	<j:CardActions>
+		<j:Button text="Update" click="srv.update(product)"/>
+	</j:CardActions>
+			
+</j:Card>

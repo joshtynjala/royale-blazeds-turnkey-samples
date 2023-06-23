@@ -1,0 +1,18 @@
+{
+	"config": "royale",
+	"compilerOptions": {
+		"targets": ["JSRoyale"],
+		"source-path": ["src"],
+        "source-map": true,
+        "library-path": [
+            "${royalelib}/libs/MXRoyaleBase.swc"
+        ],
+        "js-library-path": [
+            "${royalelib}/js/libs/MXRoyaleBaseJS.swc"
+        ],
+        "html-template": "index-template.html",
+        "theme": "${royalelib}/themes/JewelTheme/src/main/resources/defaults.css"
+	},
+	"mainClass": "Main"
+}
+

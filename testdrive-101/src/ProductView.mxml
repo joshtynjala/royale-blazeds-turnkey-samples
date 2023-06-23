@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<j:Card xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:js="library://ns.apache.org/royale/basic"
+	xmlns:mx="library://ns.apache.org/royale/mx"
+	xmlns:j="library://ns.apache.org/royale/jewel"
+	xmlns:html="library://ns.apache.org/royale/html">
+
+	<fx:Script>
+		<![CDATA[
+			[Bindable]
+			public var product:Object;
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<js:CurrencyFormatter id="cf"/>
+	</fx:Declarations>
+
+	<j:beads>
+		<js:ContainerDataBinding/>
+	</j:beads>
+
+	<j:CardHeader>
+		<html:H3 text="Product Details" className="primary-normal"/>
+	</j:CardHeader>
+	
+	<j:CardPrimaryContent>
+		<js:Image src="../images/{product.image}"/>
+		<j:Label text="{product.name}" width="100%">
+			<j:beads>
+				<j:MultiLine multiline="true"/>
+			</j:beads>
+		</j:Label>
+		<j:Label text="Price: {cf.format(product.price)}" width="100%">
+			<j:beads>
+				<j:MultiLine multiline="true"/>
+			</j:beads>
+		</j:Label>
+		<j:Label text="{product.description}" width="100%">
+			<j:beads>
+				<j:MultiLine multiline="true"/>
+			</j:beads>
+		</j:Label>
+	</j:CardPrimaryContent>
+			
+</j:Card>

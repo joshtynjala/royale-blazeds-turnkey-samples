@@ -1,0 +1,19 @@
+
+<j:ListItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:j="library://ns.apache.org/royale/jewel"
+	xmlns:js="library://ns.apache.org/royale/basic"
+	xmlns:html="library://ns.apache.org/royale/html">
+	
+	<fx:Declarations>
+		<js:CurrencyFormatter id="cf"/>
+	</fx:Declarations>
+
+	<j:beads>
+		<js:ItemRendererDataBinding/>
+        <j:VerticalLayout gap="2" itemsVerticalAlign="itemsCenter"/>
+	</j:beads>
+	
+	<html:H5 text="{data.name}"/>
+	<j:Image src="../images/{data.image}" width="40" height="80"/>
+	<j:Label text="Price: {cf.format(data.price)}"/>
+</j:ListItemRenderer>

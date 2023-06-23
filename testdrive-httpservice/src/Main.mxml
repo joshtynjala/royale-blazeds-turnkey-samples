@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<j:Application
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:js="library://ns.apache.org/royale/basic"
+	xmlns:mx="library://ns.apache.org/royale/mx"
+	xmlns:j="library://ns.apache.org/royale/jewel"
+	xmlns:html="library://ns.apache.org/royale/html"
+	xmlns="*">
+
+	<fx:Script>
+		<![CDATA[
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+
+			import org.apache.royale.collections.ArrayList;
+			import org.apache.royale.jewel.Alert;
+			import org.apache.royale.reflection.registerClassAlias;
+		
+			[Bindable]
+			private var products:ArrayList;
+
+			private function onResult(event:ResultEvent):void
+			{
+				products = new ArrayList(event.result.catalog.product);
+			}
+			
+			private function onFault(event:FaultEvent):void
+			{
+				Alert.show(event.fault.faultString, "Fault");
+			}
+			
+		]]>
+	</fx:Script>
+
+	<fx:Style>
+		.jewel.item.datagrid {
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+	</fx:Style>
+
+	<fx:Declarations>
+		<mx:HTTPService id="srv" url="/samples/testdrive-httpservice/catalog.jsp"
+			result="onResult(event)" fault="onFault(event)"/>
+	</fx:Declarations>
+
+    <j:beads>
+		<js:ApplicationDataBinding/>
+    </j:beads>
+    
+    <j:valuesImpl>
+        <js:SimpleCSSValuesImpl/>
+    </j:valuesImpl>
+
+	<j:initialView>
+		<j:ResponsiveView id="rootView">
+			<j:VGroup gap="2" width="100%" height="100%">
+				<j:beads>
+					<js:Paddings padding="10"/>
+				</j:beads>
+				<j:DataGrid id="dg" dataProvider="{products}" width="100%" height="100%">
+					<j:beads>
+						<j:RemoveAllDataGridItemRendererForArrayListData/>
+						<js:CollectionChangeUpdateForArrayListData/>
+					</j:beads>
+					<j:columns>
+						<j:DataGridColumn label="Name" dataField="name"/>
+						<j:DataGridColumn label="ID" dataField="productId"/>
+						<j:DataGridColumn label="Category" dataField="category"/>
+						<j:DataGridColumn label="In Stock" dataField="qtyInStock"/>
+						<j:DataGridColumn label="Price" dataField="price"/>
+						<j:DataGridColumn label="Description" dataField="description"/>
+					</j:columns>
+				</j:DataGrid>
+				<j:Button text="Get Data" click="srv.send()"/>
+			</j:VGroup>
+		</j:ResponsiveView>
+	</j:initialView>
+</j:Application>
